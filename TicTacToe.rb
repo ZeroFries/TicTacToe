@@ -10,17 +10,17 @@ class TicTacToe
 		grid[col]==grid[col+3] && grid[col+3]==grid[col+6]
 	end
 
-	def diagonal_win
-		grid[0]==grid[4] && grid[4]==grid[8]
+	def diagonal_win(direction)
+		grid[direction*2]==grid[4] && grid[4]==grid[8-(direction*2)]
 	end
 
 	def winner  #finds winning player
-    if horizantal_win(0) || diagonal_win || verticle_win(0)
-    	grid[0]=="x" ? 1 : 2
-    elsif horizantal_win(1) || verticle_win(1)
-    	grid[4]=="x" ? 1 : 2
+    if horizantal_win(0) || verticle_win(0)
+    	grid[0]=="X" ? 1 : 2
+    elsif horizantal_win(1) || verticle_win(1) || diagonal_win(0) || diagonal_win(1)
+    	grid[4]=="X" ? 1 : 2
     elsif horizantal_win(2) || verticle_win(2)
-      grid[8]=="x" ? 1 : 2
+      grid[8]=="X" ? 1 : 2
     else
   		nil
   	end
@@ -52,7 +52,7 @@ class TicTacToe
       puts "\nPlayer #{player}, type 1-9 to play in the corresponding spot"
       play = gets.to_i-1
 
-      while !grid.include?(play+1)  #check valid input
+      until grid.include?(play+1)  #loop until valid input
       	puts "Make a proper play!"
       	play = gets.to_i-1
       end
