@@ -14,21 +14,13 @@ class TicTacToe
 		grid[0]==grid[4] && grid[4]==grid[8]
 	end
 
-	def winner
-    if horizantal_win(0)
+	def winner  #finds winning player
+    if horizantal_win(0) || diagonal_win || verticle_win(0)
     	grid[0]=="x" ? 1 : 2
-    elsif horizantal_win(1)
-    	grid[3]=="x" ? 1 : 2
-    elsif horizantal_win(2)
-      grid[6]=="x" ? 1 : 2
-    elsif verticle_win(0)
-      grid[0]=="x" ? 1 : 2
-    elsif verticle_win(1)
-      grid[1]=="x" ? 1 : 2
-    elsif verticle_win(2)
-      grid[2]=="x" ? 1 : 2
-    elsif diagonal_win
-    	grid[0]=="x" ? 1 : 2
+    elsif horizantal_win(1) || verticle_win(1)
+    	grid[4]=="x" ? 1 : 2
+    elsif horizantal_win(2) || verticle_win(2)
+      grid[8]=="x" ? 1 : 2
     else
   		nil
   	end
@@ -38,7 +30,7 @@ class TicTacToe
 		!winner.nil?
 	end
 
-	def output
+	def output  #prints the grid
 		i = 0
 		puts "\n-----------------------------------------------------------\n\n"
 		grid.each do |entry|
@@ -48,7 +40,7 @@ class TicTacToe
 		end
 	end
 
-	def initialize
+	def initialize  #new game
 		@player = 1
     @grid = [1,2,3,4,5,6,7,8,9]
     turns = 9
@@ -60,21 +52,23 @@ class TicTacToe
       puts "\nPlayer #{player}, type 1-9 to play in the corresponding spot"
       play = gets.to_i-1
 
-      while !grid.include?(play+1)
+      while !grid.include?(play+1)  #check valid input
       	puts "Make a proper play!"
       	play = gets.to_i-1
       end
 
 
       if player == 1
-      	grid[play] = "x"
+      	grid[play] = "X"
+      	@player = 2
       else
-      	grid[play] = "o"
+      	grid[play] = "O"
+      	@player = 1
       end
-      player==1 ? @player = 2 : @player = 1
       turns-= 1
     end
 
+    #End of game
     output
  		if win?
     	puts "PLAYER #{winner} WINS!"
